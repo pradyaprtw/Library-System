@@ -9,23 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('buku', function (Blueprint $table) {
             $table->id();
             $table->string('judul_buku');
-            $table->string('penulis_buku');
-            $table->string('penerbit_buku');
-            $table->string('tahun_buku');
-            $table->string('stok_buku');
+            $table->string('penulis');
+            $table->string('penerbit');
+            $table->year('tahun_terbit');
+            $table->string('isbn')->unique();
+            $table->foreignId('id_kategori')->constrained('kategori')->onDelete('cascade');
+            $table->integer('stok');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('buku');
     }
