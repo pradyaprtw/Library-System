@@ -4,16 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Buku;
+use App\Models\Kategori;
 
 class BukuController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function buku($judul_buku, $penulis, $penerbit, $tahun_terbit, $isbn, $id_kategori, $stok)
+    {
+        $data = [
+            'judul_buku' => $judul_buku,
+            'penulis' => $penulis,
+            'penerbit' => $penerbit,
+            'tahun_terbit' => $tahun_terbit,
+            'isbn' => $isbn,
+            'nama_kategori' => $id_kategori,
+            'stok' => $stok
+        ];
+
+        return view('buku.buku', $data);
+    }
     public function index()
     {
-        $buku = Buku::all();
-        return view ('buku.index', ['buku' => $buku]);
+        $buku = Buku::with('kategori')->get(); // Memuat data buku dengan relasi kategori
+        return view('buku.buku', compact('buku')); // Kirim data buku ke view
     }
 
     /**
@@ -21,7 +36,9 @@ class BukuController extends Controller
      */
     public function create()
     {
-        return view('buku.create');
+        // Ambil semua kategori untuk ditampilkan di dropdown
+        $kategori = Kategori::all();
+        return view('buku.create_buku', compact('kategori')); // Kirim data kategori ke view
     }
 
     /**
@@ -57,7 +74,7 @@ class BukuController extends Controller
      */
     public function edit(string $id)
     {
-        return view('buku.edit', compact('buku'));
+        return view('buku.edit_buku', compact('buku'));
     }
 
     /**
