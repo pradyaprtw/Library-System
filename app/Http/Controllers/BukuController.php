@@ -9,7 +9,8 @@ use App\Models\Kategori;
 class BukuController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a
+     * sting of the resource.
      */
     public function buku($judul_buku, $penulis, $penerbit, $tahun_terbit, $isbn, $id_kategori, $stok)
     {
@@ -72,30 +73,36 @@ class BukuController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        return view('buku.edit_buku', compact('buku'));
+        $buku = Buku::findOrFail($id); // Mengambil satu buku berdasarkan ID
+        $kategori = Kategori::all(); // Mengambil semua kategori
+
+        return view('buku.edit_buku', compact('buku', 'kategori')); // Mengirim model buku dan koleksi kategori ke view
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
+        // Validasi input
         $request->validate([
-            'judul_buku' => 'required',
-            'penulis' => 'required',
-            'penerbit' => 'required',
+            'judul_buku' => 'required|string|max:255',
+            'penulis' => 'required|string|max:255',
+            'penerbit' => 'required|string|max:255',
             'tahun_terbit' => 'required|integer',
-            'isbn' => 'required|unique:buku',
-            'id_kategori' => 'required',
+            'isbn' => 'required|string|max:13',
+            'id_kategori' => 'required|exists:kategori,id',
             'stok' => 'required|integer',
         ]);
 
-        $buku = Buku::find($id);
-        $buku->update($request->except('_token', '_method'));
+        // Mengupdate data buku
+        $buku = Buku::findOrFail($id);
+        $buku->update($request->all());
 
-        return redirect()->route('buku.index')->with('success', 'Data buku berhasil diupdate');
+        return redirect()->route('buku.index')->with('success', 'Buku berhasil diupdate');
     }
 
     /**
@@ -103,7 +110,7 @@ class BukuController extends Controller
      */
     public function destroy(string $id)
     {
-        $buku = Buku::find($id);
+        $buku = Buku::findOrFail($id); // Mengambil satu buku berdasarkan ID
         $buku->delete();
 
         return redirect()->route('buku.index')->with('success', 'Data buku berhasil dihapus');

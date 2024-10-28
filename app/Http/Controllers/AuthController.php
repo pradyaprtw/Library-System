@@ -27,11 +27,21 @@ class AuthController extends Controller
 
         // Cek kredensial admin
         if (Auth::guard('admin')->attempt($credentials)) {
-            // Redirect ke home khusus admin setelah login berhasil
+            $request->session()->regenerate(); // Regenerasi sesi untuk keamanan
+            // Redirect ke halaman khusus admin setelah login berhasil
             return redirect()->route('admin.home')->with('success', 'Berhasil login sebagai admin');
         } else {
             // Jika login gagal
             return redirect()->back()->with('error', 'Username atau password salah');
         }
     }
+
+    // Menangani logout admin
+    public function logout(Request $request) {
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('admin.login')->with('success', 'Berhasil logout');
+    }
+    
 }
