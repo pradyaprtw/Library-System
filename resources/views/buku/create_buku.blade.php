@@ -1,6 +1,7 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('content')
+
     <h2 class="my-4">Tambah Buku Baru</h2>
     <form action="{{ route('buku.store') }}" method="POST" class="card p-4">
         @csrf
@@ -29,9 +30,12 @@
         </div>
 
         <div class="form-group mb-3">
-            <label for="kategori_id">Kategori</label>
-            <select id="kategori_id" name="kategori_id" class="form-control" required>
-                <!-- Ambil data kategori -->
+            <label for="id_kategori">Kategori</label>
+            <select id="id_kategori" name="id_kategori" class="form-control" required>
+            <option value="" disabled selected>Pilih Kategori</option> <!-- Opsi kosong -->    
+                @foreach ($kategori as $item)
+                <option value="{{ $item->id }}">{{ $item->nama_kategori }}</option>
+                @endforeach
             </select>
         </div>
 

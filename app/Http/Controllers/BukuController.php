@@ -4,16 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Buku;
+use App\Models\Kategori;
 
 class BukuController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a
+     * sting of the resource.
      */
+    public function buku($judul_buku, $penulis, $penerbit, $tahun_terbit, $isbn, $id_kategori, $stok)
+    {
+        $data = [
+            'judul_buku' => $judul_buku,
+            'penulis' => $penulis,
+            'penerbit' => $penerbit,
+            'tahun_terbit' => $tahun_terbit,
+            'isbn' => $isbn,
+            'nama_kategori' => $id_kategori,
+            'stok' => $stok
+        ];
+
+        return view('buku.buku', $data);
+    }
     public function index()
     {
-        $buku = Buku::all();
-        return view ('buku.index', ['buku' => $buku]);
+        $buku = Buku::with('kategori')->get(); // Memuat data buku dengan relasi kategori
+        return view('buku.buku', compact('buku')); // Kirim data buku ke view
     }
 
     /**
@@ -21,7 +37,9 @@ class BukuController extends Controller
      */
     public function create()
     {
-        return view('buku.create');
+        // Ambil semua kategori untuk ditampilkan di dropdown
+        $kategori = Kategori::all();
+        return view('buku.create_buku', compact('kategori')); // Kirim data kategori ke view
     }
 
     /**
@@ -55,30 +73,36 @@ class BukuController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        return view('buku.edit', compact('buku'));
+        $buku = Buku::findOrFail($id); // Mengambil satu buku berdasarkan ID
+        $kategori = Kategori::all(); // Mengambil semua kategori
+
+        return view('buku.edit_buku', compact('buku', 'kategori')); // Mengirim model buku dan koleksi kategori ke view
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
+        // Validasi input
         $request->validate([
-            'judul_buku' => 'required',
-            'penulis' => 'required',
-            'penerbit' => 'required',
+            'judul_buku' => 'required|string|max:255',
+            'penulis' => 'required|string|max:255',
+            'penerbit' => 'required|string|max:255',
             'tahun_terbit' => 'required|integer',
-            'isbn' => 'required|unique:buku',
-            'id_kategori' => 'required',
+            'isbn' => 'required|string|max:13',
+            'id_kategori' => 'required|exists:kategori,id',
             'stok' => 'required|integer',
         ]);
 
-        $buku = Buku::find($id);
-        $buku->update($request->except('_token', '_method'));
+        // Mengupdate data buku
+        $buku = Buku::findOrFail($id);
+        $buku->update($request->all());
 
-        return redirect()->route('buku.index')->with('success', 'Data buku berhasil diupdate');
+        return redirect()->route('buku.index')->with('success', 'Buku berhasil diupdate');
     }
 
     /**
@@ -86,7 +110,7 @@ class BukuController extends Controller
      */
     public function destroy(string $id)
     {
-        $buku = Buku::find($id);
+        $buku = Buku::findOrFail($id); // Mengambil satu buku berdasarkan ID
         $buku->delete();
 
         return redirect()->route('buku.index')->with('success', 'Data buku berhasil dihapus');
