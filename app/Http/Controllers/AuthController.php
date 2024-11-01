@@ -4,36 +4,35 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
     // Menampilkan halaman login admin
-    public function index() {
+    public function login() {
         return view('auth.login'); // Pastikan view ini ada
     }
 
     // Menangani login admin
-    public function login(Request $request) {
-        $credentials = $request->only('username', 'password');
-
-        // Validasi input
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ], [
-            'username.required' => 'Username wajib diisi',
-            'password.required' => 'Password wajib diisi',
+    public function authenticate(Request $request) {
+        $credentials = $request->validate([
+            'username' => ['required'],
+            'password' => ['required'],
         ]);
 
-        // Cek kredensial admin
-        if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate(); // Regenerasi sesi untuk keamanan
-            // Redirect ke halaman khusus admin setelah login berhasil
-            return redirect()->route('admin.home')->with('success', 'Berhasil login sebagai admin');
-        } else {
-            // Jika login gagal
-            return redirect()->back()->with('error', 'Username atau password salah');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            // return redirect()->route('admin.home')->with('success', 'Berhasil login');
         }
+        // return back()->withErrors([
+        //     'username' => 'Username atau password salah',
+        // ])->onlyInput('username');
+
+        return redirect('');
+    }
+
+    public function register(Request $request) {
+        return view('auth.register');
     }
 
     // Menangani logout admin
@@ -44,4 +43,5 @@ class AuthController extends Controller
         return redirect()->route('admin.login')->with('success', 'Berhasil logout');
     }
     
+
 }

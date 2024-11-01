@@ -15,10 +15,21 @@ class KategoriSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            'horror',
-            'action',
-            'romance',
-            'academic'
+            'Romance',
+            'Fantasy',
+            'Misteri',
+            'Horor',
+            'Sejarah',
+            'Keluarga',
+            'Pendidikan',
+            'Sci-Fi',
+            'Drama',
+            'Biografi',
+            'Komik',
+            'Komedi',
+            'Thriller',
+            'Novel',
+            'Psikologi',
         ];
 
         foreach ($data as $kategoriNama) {
