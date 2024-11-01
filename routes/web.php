@@ -16,22 +16,25 @@ use App\Http\Controllers\AuthController;
 |
 */
 
+route::get('/', function (){
+    return view('welcome');
+})->middleware('auth');
+
 // Rute untuk buku (menggunakan resource controller)
 Route::resource('buku', BukuController::class);
 
-
 // Rute untuk login admin
-Route::get('/', [AuthController::class, 'index'])->name('admin.login'); // Halaman login admin
-Route::post('/', [AuthController::class, 'login'])->name('admin.login.submit'); // Proses login admin
-Route::post('/', [AuthController::class, 'logout'])->name('admin.logout'); // Logout admin
+Route::get('login', [AuthController::class, 'login'])->name('login');// Halaman login admin
+Route::post('/', [AuthController::class, 'authenticate']); // Proses login admin
+Route::get('/register', [AuthController::class, 'register']); // Proses register admin
+Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout'); // Logout admin
 
 // Rute untuk halaman khusus admin setelah login
-Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin.home');
-});
+// Route::middleware(['auth:admin'])->group(function () {
+//     Route::get('/home', [AdminController::class, 'index'])->name('admin.home');
+// });
 
-// Rute untuk menampilkan daftar buku (tambahan jika diperlukan)
-Route::get('/', [BukuController::class, 'index'])->name('buku.index');
-Route::get('/{id}', [BukuController::class, 'edit'])->name('buku.edit');
-Route::put('/{id}', [BukuController::class, 'update'])->name('buku.update');
-
+// Rute tambahan untuk buku
+Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');  
+Route::get('/buku/edit/{id}', [BukuController::class, 'edit'])->name('buku.edit');
+Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
