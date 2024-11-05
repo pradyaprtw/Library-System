@@ -2,7 +2,7 @@
 
 @include('/admin/header')
 
-@section('title', 'Buku')
+@section('title', 'Anggota')
 
 @push('styles')
     @livewireStyles
@@ -14,9 +14,9 @@
 
 @section('content')
 <div class="container">
-    <h3 class="mt-4 mb-4">Tambah Data Buku</h3>
+    <h3 class="mt-4 mb-4">Edit Data Anggota</h3>
     <div class="row">
-        @livewire('buku-create')
+        @livewire('anggota-edit', ['id' => $id])
     </div>
 </div>
 @endsection

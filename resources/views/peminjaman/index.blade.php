@@ -1,12 +1,10 @@
 @extends('layouts.app')
-
 @include('/admin/header')
-
-@section('title', 'Buku')
+@section('title', 'Peminjaman')
 
 @push('styles')
     @livewireStyles
-@endpush
+@endpush    
 
 @push('scripts')
     @livewireScripts
@@ -14,9 +12,12 @@
 
 @section('content')
 <div class="container">
-    <h3 class="mt-4 mb-4">Tambah Data Buku</h3>
-    <div class="row">
+    <h3 class="mt-4 mb-4">Data Peminjaman</h3>
+    {{-- <div class="row">
         @livewire('buku-create')
+    </div> --}}
+    <div>
+        @livewire('peminjaman-table')
     </div>
 </div>
 @endsection

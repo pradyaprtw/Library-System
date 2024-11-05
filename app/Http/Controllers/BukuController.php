@@ -12,16 +12,16 @@ class BukuController extends Controller
      * Display a
      * sting of the resource.
      */
-    public function buku($judul_buku, $penulis, $penerbit, $tahun_terbit, $isbn, $id_kategori, $stok)
+    public function buku($judul_buku, $penulis, $penerbit, $tahun_terbit, $id_kategori, $stok, $foto)
     {
         $data = [
             'judul_buku' => $judul_buku,
             'penulis' => $penulis,
             'penerbit' => $penerbit,
             'tahun_terbit' => $tahun_terbit,
-            'isbn' => $isbn,
             'nama_kategori' => $id_kategori,
-            'stok' => $stok
+            'stok' => $stok,
+            'foto' => $foto
         ];
 
         return view('buku.buku', $data);
@@ -37,9 +37,14 @@ class BukuController extends Controller
      */
     public function create()
     {
+        $buku = Buku::all();
         // Ambil semua kategori untuk ditampilkan di dropdown
         $kategori = Kategori::all();
-        return view('buku.create_buku', compact('kategori')); // Kirim data kategori ke view
+        $data = [
+            'buku' => $buku,
+            'kategori' => $kategori
+        ];
+        return view('buku.create_buku', compact('buku','kategori')); // Kirim data kategori ke view
     }
 
     /**
@@ -52,7 +57,6 @@ class BukuController extends Controller
             'penulis' => 'required',
             'penerbit' => 'required',
             'tahun_terbit' => 'required|integer',
-            'isbn' => 'required|unique:buku',
             'id_kategori' => 'required',
             'stok' => 'required|integer',
         ]);
@@ -65,9 +69,11 @@ class BukuController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        return view('buku.show', compact('buku'));
+        $buku = Buku::findOrFail($id);
+        $kategori = Kategori::all();
+        return view('buku.show_buku', compact('buku', 'kategori'));
     }
 
     /**
@@ -93,7 +99,6 @@ class BukuController extends Controller
             'penulis' => 'required|string|max:255',
             'penerbit' => 'required|string|max:255',
             'tahun_terbit' => 'required|integer',
-            'isbn' => 'required|string|max:13',
             'id_kategori' => 'required|exists:kategori,id',
             'stok' => 'required|integer',
         ]);

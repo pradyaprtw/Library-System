@@ -33,7 +33,7 @@
 <div class="main d-flex justify-content-center align-items-center">
   <div class="login-box">
       <h3>Welcome to Library System</h3>
-      <form action="" method="POST">
+      <form action="{{ url('/authenticate') }}" method="POST">
         @csrf
         <div>
           <label class="form-label" for="username">Username</label>
