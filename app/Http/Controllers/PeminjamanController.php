@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
-use App\Models\UserModel;
 use Illuminate\Http\Request;
 use App\Models\PeminjamanModel;
+use App\Models\UserModel;
 
 class PeminjamanController extends Controller
 {

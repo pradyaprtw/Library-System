@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Buku;
 use App\Models\Kategori;
+use App\Models\PeminjamanModel;
 
 class BukuController extends Controller
 {
@@ -120,4 +121,69 @@ class BukuController extends Controller
 
         return redirect()->route('buku.index')->with('success', 'Data buku berhasil dihapus');
     }
+
+    // Metode untuk meminjam buku
+    public function pinjam($id)
+    {
+        $buku = Buku::findOrFail($id);
+    
+        // Cek apakah buku masih tersedia
+        if ($buku->stok > 0) {
+            // Membuat peminjaman baru
+            $peminjaman = new PeminjamanModel();
+            $peminjaman->id_buku = $buku->id;
+            $peminjaman->id_anggota = auth()->id(); // ID anggota yang sedang login
+            $peminjaman->status = 'Dipinjam';
+            $peminjaman->tanggal_peminjaman = now(); // Menyimpan tanggal peminjaman
+            $peminjaman->save();
+    
+            // Mengurangi stok buku
+            $buku->stok--;
+            $buku->save();
+    
+            return redirect()->back()->with('success', 'Buku berhasil dipinjam!');
+        }
+    
+        return redirect()->back()->with('error', 'Buku tidak tersedia untuk dipinjam!');
+    }    
+
+    public function kembalikan($id)
+    {
+        $buku = Buku::findOrFail($id);
+    
+        // Mengambil peminjaman terakhir buku
+        $peminjaman = PeminjamanModel::where('id_buku', $buku->id)
+            ->where('id_anggota', auth()->id())
+            ->where('status', 'Dipinjam')
+            ->first();
+    
+        if ($peminjaman) {
+            // Mengupdate status peminjaman
+            $peminjaman->status = 'Dikembalikan';
+            $peminjaman->tanggal_pengembalian = now(); // Menyimpan tanggal pengembalian
+            $peminjaman->save();
+    
+            // Menambahkan stok buku
+            $buku->stok++;
+            $buku->save();
+    
+            return redirect()->back()->with('success', 'Buku berhasil dikembalikan!');
+        }
+    
+        return redirect()->back()->with('error', 'Tidak ada peminjaman buku ini yang ditemukan!');
+    }
+    
+
+    public function riwayatPeminjaman()
+    {
+        $kategori = Kategori::all();
+        // Mengambil riwayat peminjaman berdasarkan anggota yang sedang login
+        $riwayat = PeminjamanModel::with('buku.kategori') // Mengambil data peminjaman dan buku terkait
+            ->where('id_anggota', auth()->id()) // Filter berdasarkan ID anggota yang sedang login
+            ->get();
+
+        return view('anggota.riwayat', compact('riwayat'));
+    }
+
+
 }

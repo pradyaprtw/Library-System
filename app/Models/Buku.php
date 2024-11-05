@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Buku extends Model
 {
@@ -15,6 +16,11 @@ class Buku extends Model
     public function kategori()
     {
         return $this->belongsTo(Kategori::class, 'id_kategori'); // Menghubungkan id_kategori dengan model Kategori
+    }
+
+    public function peminjaman()
+    {
+        return $this->hasOne(PeminjamanModel::class, 'id_buku')->where('id_anggota', Auth::id())->latest();
     }
 }
 

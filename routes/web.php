@@ -23,16 +23,16 @@ route::get('/', function (){
 })->middleware('auth');
 
 // Rute untuk buku (menggunakan resource controller)
-Route::resource('buku', BukuController::class);
-
-// Rute untuk login admin
+// Route::resource('buku', BukuController::class);
+Route::get('/login', [AuthController::class, 'login'])->middleware('check.active.session');
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/registerProses', [AuthController::class, 'registerProses'])->name('register.proses');
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate'); 
-Route::get('/register', [AuthController::class, 'register']); 
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout'); 
-    Route::get('/admin/home', [AdminController::class, 'index'])->middleware( 'onlyadmin')->name('admin.home');
+    Route::get('/admin/home', [AdminController::class, 'index'])->middleware('onlyadmin')->name('admin.home');
     Route::delete('/buku/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
     
     Route::prefix('buku')->group(function () {   
@@ -48,13 +48,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [AnggotaController::class, 'create'])->name('anggota.create');
         Route::get('/edit/{id}', [AnggotaController::class, 'edit'])->name('anggota.edit');
         Route::put('/{id}', [AnggotaController::class, 'update'])->name('anggota.update');
-        // Route::get('/', [AnggotaController::class, 'index'])->name('anggota.index');
     });
+    
+    Route::get('/home', [AnggotaController::class, 'home'])->middleware('onlyguest')->name('anggota.home');
+    Route::get('/profile/edit/{id}', [AnggotaController::class, 'profile'])->middleware('onlyguest')->name('anggota.profile');
 
     Route::prefix('peminjaman')->group(function () {
         Route::get('/', [PeminjamanController::class, 'index'])->middleware('onlyadmin')->name('peminjaman.index');
         Route::get('/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
     });
+    
+Route::post('/buku/pinjam/{id}', [BukuController::class, 'pinjam'])->name('buku.pinjam');
+Route::post('/buku/kembalikan/{id}', [BukuController::class, 'kembalikan'])->name('buku.kembalikan');
+Route::get('/anggota/riwayat', [BukuController::class, 'riwayatPeminjaman'])->name('anggota.riwayat');
+
    
 });
 
