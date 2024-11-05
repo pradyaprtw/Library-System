@@ -27,3 +27,28 @@ p{
 .card-title{
     color: #FFF4B7;
 }
+
+.profile-menu {
+    display: none;
+    position: absolute;
+    right: 0px;
+    top: 40px;
+    background-color: #B03052; /* Sesuaikan warna latar belakang */
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    z-index: 1000;
+    width: 200px; /* Tambahkan lebar untuk membuat menu lebih besar */
+    padding: 10px 0; /* Menambahkan padding atas dan bawah */
+}
+.profile-menu a {
+    display: block;
+    padding: 12px 20px; /* Atur padding kiri dan kanan */
+    text-decoration: none;
+    color: #FFF4B7; /* Warna teks */
+    font-size: 16px; /* Sesuaikan ukuran font */
+}
+.profile-menu a:hover {
+    background-color: #8C2D45; /* Warna saat di-hover */
+}
+

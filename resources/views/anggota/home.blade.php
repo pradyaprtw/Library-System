@@ -1,0 +1,63 @@
+@extends('layouts.app')
+
+@section('content')
+@section('title', 'Home Anggota')
+@include('/anggota/header')
+
+<div class="container mt-4">
+    <div class="row">
+        @foreach ($buku as $item)
+        <div class="col-md-3">
+            <div class="card m-2" style="background-color: #B03052">
+                <div class="img-bx">
+                    <img src="{{ asset('storage/'.$item->foto) }}" class="card-img-top" alt="gambar buku">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ $item->judul_buku }}</h5>
+                    <p class="card-title">{{ $item->penulis }}</p>
+                    <p class="card-title">{{ $item->penerbit }}</p>
+                    <p class="card-title">{{ $item->tahun_terbit }}</p>
+                    <p class="card-title">{{ $item->isbn }}</p>
+                    <p class="card-title">{{ $item->nama_kategori }}</p>
+                    <p class="card-title">{{ $item->stok }}</p>
+
+                    {{-- Menampilkan status peminjaman --}}
+                    @php
+                        $statusPeminjaman = optional($item->peminjaman)->status;
+                    @endphp
+                    @if ($statusPeminjaman === 'Dipinjam')
+                        <span class="badge bg-info">Dipinjam</span>
+                        <form action="{{ route('buku.kembalikan', $item->id) }}" method="POST" class="mt-2">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm">Kembalikan</button>
+                        </form>
+                    @elseif ($statusPeminjaman === 'Dikembalikan')
+                        <span class="badge bg-success">Dikembalikan</span>
+                        {{-- Menampilkan tombol pinjam jika stok tersedia --}}
+                        @if ($item->stok > 0)
+                            <form action="{{ route('buku.pinjam', $item->id) }}" method="POST" class="mt-2">
+                                @csrf
+                                <button type="submit" class="btn btn-primary btn-sm">Pinjam Lagi</button>
+                            </form>
+                        @else
+                            <span class="badge bg-warning">Stok Habis</span>
+                        @endif
+                    @else
+                        <span class="badge bg-secondary">Status Tidak Diketahui</span>
+                        @if ($item->stok > 0)
+                            <form action="{{ route('buku.pinjam', $item->id) }}" method="POST" class="mt-2">
+                                @csrf
+                                <button type="submit" class="btn btn-primary btn-sm">Pinjam</button>
+                            </form>
+                        @else
+                            <span class="badge bg-warning">Stok Habis</span>
+                        @endif
+                    @endif
+
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endsection

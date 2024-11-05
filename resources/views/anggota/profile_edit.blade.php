@@ -1,9 +1,12 @@
 @extends('layouts.app')
-@section('title', 'Tambah Peminjaman')
+
+@include('/anggota/header')
+
+@section('title', 'Edit Profile')
 
 @push('styles')
     @livewireStyles
-@endpush    
+@endpush
 
 @push('scripts')
     @livewireScripts
@@ -11,9 +14,9 @@
 
 @section('content')
 <div class="container">
-    <h3 class="mt-4 mb-4">Tambah Data Peminjaman</h3>
+    <h3 class="mt-4 mb-4">Edit Profile</h3>
     <div class="row">
-        @livewire('peminjaman-create')
+        @livewire('users-edit', ['id' => $id])
     </div>
 </div>
 @endsection

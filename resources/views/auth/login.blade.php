@@ -19,7 +19,8 @@
       margin-bottom: 15px;
     }
     h3 {
-      margin: 15px;
+      text-align: center;
+      margin-bottom: 15px;
     }
     .btn-custom{
       background-color: #B03052;
@@ -47,7 +48,7 @@
           <button class="btn btn-custom form-control" type="submit">Login</button>
         </div>
         <div class="d-flex justify-content-between">
-          <a class="btn btn-link" style="color: #B03052" href="register">Register</a>
+          <a class="btn btn-link" style="color: #B03052" href="register">Sign Up</a>
           <a class="btn btn-link" style="color: #B03052" href="...">Forgot Password?</a>
         </div>
       </form>

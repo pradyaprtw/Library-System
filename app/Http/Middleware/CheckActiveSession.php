@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class OnlyAdmin
+class CheckActiveSession
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,14 @@ class OnlyAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role_id == 1) {
-            return redirect('admin/home');
+        if (Auth::check()) {
+            if (Auth::user()->role == 1) {
+                return redirect()->route('admin.home');
+            } elseif (Auth::user()->role == 2) {
+                return redirect()->route('anggota.home');
+            }
         }
+        
         return $next($request);
     }
 }

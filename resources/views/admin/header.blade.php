@@ -24,6 +24,9 @@
                       <li class="nav-item">
                           <a class="nav-link" style="color: #FFF4B7;" href="{{ route('peminjaman.index') }}">Peminjaman</a>
                       </li>
+                      <li class="nav-item">
+                          <a class="nav-link" style="color: #FFF4B7;" href="{{ route('logout') }}">Logout</a>
+                      </li>
                       <li class="nav-item dropdown">
                           <a class="nav-link dropdown-toggle" style="color: #FFF4B7;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                               Dropdown

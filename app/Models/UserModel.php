@@ -10,7 +10,6 @@ class UserModel extends Model
     use HasFactory;
 
     protected $table = 'users';
-    protected $primaryKey = 'id';
 
     protected $fillable = [
         'nama',
@@ -26,5 +25,10 @@ class UserModel extends Model
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function peminjaman()
+    {
+        return $this->hasMany(PeminjamanModel::class, 'id_anggota');
     }
 }
