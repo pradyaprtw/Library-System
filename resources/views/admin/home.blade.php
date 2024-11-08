@@ -21,7 +21,7 @@
             <p class="card-title">{{$item->nama_kategori}}</p>
             <p class="card-title">{{$item->stok}}</p>
             <a href="{{ route('buku.edit', $item->id)}}" class="btn btn-warning">Edit</a>
-            <form action="{{ route('admin.destroy', $item->id) }}" method="POST" style="display: inline;">
+            <form action="{{ route('buku.destroy', $item->id) }}" method="POST" style="display: inline;">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger">Hapus</button>
