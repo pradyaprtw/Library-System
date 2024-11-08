@@ -25,6 +25,7 @@ class BukuEdit extends Component
         $this->tahun_terbit = $this->buku->tahun_terbit;
         $this->id_kategori = $this->buku->id_kategori;
         $this->stok = $this->buku->stok;
+        $this->foto = $this->buku->foto;
     }
     public function render()
     {
@@ -40,7 +41,7 @@ class BukuEdit extends Component
             'tahun_terbit' => 'required|integer',
             'id_kategori' => 'required|integer|exists:kategori,id',
             'stok' => 'required|integer|min:1',
-            'foto' => 'nullable|image|max:2048',
+            'foto' => 'required|image|max:2048',
         ]);
 
         $imagePath = $this->buku->foto;

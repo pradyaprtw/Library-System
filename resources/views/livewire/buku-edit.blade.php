@@ -63,14 +63,14 @@
                     @enderror
                 </div>
 
-                {{-- <div class="mb-3">
+                <div class="mb-3">
                     <label for="foto">Foto</label>
                     <input type="file" class="form-control @error('foto') is-invalid @enderror" 
                            id="foto" wire:model="foto">
                     @error('foto')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div> --}}
+                </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>

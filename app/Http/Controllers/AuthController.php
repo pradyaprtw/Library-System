@@ -22,31 +22,25 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
     
-        // Memeriksa apakah pengguna sudah login
+        // Jika ada sesi login aktif, logout sesi yang ada
         if (Auth::check()) {
-            // Jika sudah login, logout sesi yang ada
             Auth::logout();
         }
     
-        // Coba autentikasi
         if (Auth::attempt($credentials)) {
-            // Regenerasi sesi setelah login berhasil
             $request->session()->regenerate();
-    
-            // Logout sesi lain di perangkat ini
-            Auth::logoutOtherDevices($request->password); // Pastikan Anda menggunakan password untuk logout sesi lain
-    
+            Auth::logoutOtherDevices($request->password); // Logout sesi lain di perangkat ini
+        
             if (Auth::user()->role_id == 1) {
-                return redirect()->route('admin.home')->with('success', 'Berhasil login');
+                return redirect()->route('admin.home')->with('success', 'Berhasil login sebagai admin');
+            } elseif (Auth::user()->role_id == 2) {
+                return redirect()->route('anggota.home')->with('success', 'Berhasil login sebagai anggota');
             }
-            if (Auth::user()->role_id == 2) {
-                return redirect()->route('anggota.home')->with('success', 'Berhasil login');
-            }
-        }
+        }        
     
-        Log::info('Login gagal atau role_id tidak sesuai');
-        return redirect('/login')->withErrors(['username' => 'Username atau password salah']);        
+        return redirect('/login')->withErrors(['username' => 'Username atau password salah']);
     }
+    
     
     
     public function register() {
@@ -63,7 +57,7 @@ class AuthController extends Controller
             'no_telepon' => 'required',
             'email' => 'required|email|unique:users,email',
             'username' => 'required|unique:users,username',
-            'password' => 'required|min:8|',
+            'password' => 'required|min:8',
         ]);
     
            $user = UserModel::create([
@@ -96,8 +90,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
-    }
-    
+        return redirect()->route('login'); // Redirect ke halaman login
+    }    
 
 }

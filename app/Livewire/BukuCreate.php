@@ -36,7 +36,7 @@ class BukuCreate extends Component
             'tahun_terbit' => 'required|integer',
             'id_kategori' => 'required|integer|exists:kategori,id',
             'stok' => 'required|integer|min:1',
-            'foto' => 'nullable|image|max:2048',
+            'foto' => 'required|image|max:2048',
         ]);
 
         $imagePath = "";

@@ -7,10 +7,6 @@
 
 <div class="container mt-4">
     <h3>Riwayat Peminjaman Anda</h3>
-
-    @if($riwayat->isEmpty())
-        <p>Anda belum pernah meminjam buku.</p>
-    @else
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -24,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($riwayat as $item)
+                @forelse($riwayat as $item)
                     <tr>
                         <td>{{ $item->buku->judul_buku }}</td>
                         <td>{{ $item->buku->penulis }}</td>
@@ -41,12 +37,13 @@
                                 <span class="badge bg-secondary">Status Tidak Diketahui</span>
                             @endif
                         </td>
-
-
                     </tr>
-                @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="7" class="text-center">Anda belum memiliki riwayat peminjaman.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
-    @endif
 </div>
 @endsection

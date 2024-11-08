@@ -11,6 +11,7 @@
                     <i class="bi bi-person-circle" id="profileIcon" style="color: #FFF4B7; font-size: 1.5rem; cursor: pointer;"></i>
                     <div class="profile-menu" id="profileMenu" style="display: none; position: absolute; right: 0; background-color: #B03052; border: 1px solid #FFF4B7; z-index: 1000;">
                         <ul class="list-unstyled">
+                            <li><a href="{{ route('anggota.home')}}" class="dropdown-item">Home</a></li>
                             <li><a href="{{ route('anggota.profile', Auth::user()->id) }}" class="dropdown-item">Edit Profile</a></li>
                             <li><a href="{{ route('logout') }}" class="dropdown-item">Logout</a></li>
                             <li><a href="{{ route('anggota.riwayat') }}" class="dropdown-item">Riwayat Peminjaman</a></li>
