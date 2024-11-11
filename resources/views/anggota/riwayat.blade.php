@@ -26,15 +26,17 @@
                         <td>{{ $item->buku->penulis }}</td>
                         <td>{{ $item->buku->tahun_terbit }}</td>
                         <td>{{ $item->buku->kategori->nama_kategori }}</td>
-                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
-                        <td>{{ $item->updated_at->format('d-m-Y') }}</td>
+                        <td>{{ $item->tanggal_peminjaman }}</td>
+                        <td>{{ $item->tanggal_pengembalian }}</td>
                         <td>
-                            @if($item->status === 'Dipinjam')
+                            @if($item->status == 'Menunggu Konfirmasi')
+                                <span class="badge bg-warning">Menunggu Konfirmasi</span>
+                            @elseif($item->status === 'Dipinjam')
                                 <span class="badge bg-info">Dipinjam</span>
                             @elseif($item->status === 'Dikembalikan')
                                 <span class="badge bg-success">Dikembalikan</span>
                             @else
-                                <span class="badge bg-secondary">Status Tidak Diketahui</span>
+                                <span class="badge bg-secondary">Tidak Ada Peminjaman</span>
                             @endif
                         </td>
                     </tr>

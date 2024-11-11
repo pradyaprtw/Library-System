@@ -1,5 +1,5 @@
 
-        document.getElementById("profileIcon").addEventListener("click", function() {
+    document.getElementById("profileIcon").addEventListener("click", function() {
             const profileMenu = document.getElementById("profileMenu");
             profileMenu.style.display = profileMenu.style.display === "none" ? "block" : "none";
         });
@@ -12,3 +12,5 @@
                 profileMenu.style.display = "none";
             }
         });
+
+        

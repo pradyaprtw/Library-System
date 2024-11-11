@@ -5,9 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\AdminBukuController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\AdminAnggotaController;
-use App\Http\Controllers\AdminBukuController;
+use App\Http\Controllers\AdminPeminjamanController;
 
 // Route untuk halaman welcome
 Route::get('/', function () {
@@ -15,10 +16,11 @@ Route::get('/', function () {
 })->middleware('auth');
 
 // Rute untuk autentikasi
-Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/registerProses', [AuthController::class, 'registerProses'])->name('register.proses');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate'); 
+// Route::match(['get', 'post'], '/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -28,15 +30,17 @@ Route::middleware(['auth', 'checkRole:1'])->group(function () {
     Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
     Route::resource('/admin/buku', AdminBukuController::class);
     Route::resource('/admin/anggota', AdminAnggotaController::class);
-    Route::resource('peminjaman', PeminjamanController::class);
+    Route::resource('peminjaman', AdminPeminjamanController::class);
+    Route::post('/admin/peminjaman/{id}', [AdminPeminjamanController::class, 'status'])->name('peminjaman.status');
 });
 
 Route::middleware(['auth', 'checkRole:2'])->group(function () {
     Route::get('/anggota/home', [AnggotaController::class, 'index'])->name('anggota.home');
     Route::get('/anggota/profile/{id}', [AnggotaController::class, 'edit'])->name('anggota.profile');
-    Route::get('/anggota/peminjaman', [BukuController::class, 'riwayatPeminjaman'])->name('anggota.riwayat');
-    Route::post('/anggota/pinjam/{id}', [BukuController::class, 'pinjam'])->name('buku.pinjam');
-    Route::post('/anggota/kembalikan/{id}', [BukuController::class, 'kembalikan'])->name('buku.kembalikan');
+    Route::get('/anggota/peminjaman', [PeminjamanController::class, 'riwayatPeminjaman'])->name('anggota.riwayat');
+    Route::post('/anggota/pinjam/{id}', [PeminjamanController::class, 'pinjam'])->name('buku.pinjam');
+    Route::post('/anggota/kembalikan/{id}', [PeminjamanController::class, 'kembalikan'])->name('buku.kembalikan');
+    Route::get('/anggota/denda/{id}', [PeminjamanController::class, 'denda'])->name('anggota.denda');
 });
 // Rute dengan middleware auth
 // Route::middleware('auth')->group(function () {

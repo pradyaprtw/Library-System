@@ -10,13 +10,21 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     // Menampilkan halaman home untuk admin
-    public function index()
-    {
-        // Fetch all books from the database
-        $buku = Buku::all(); // Adjust this according to your model
-        $kategori = Kategori::all(); // Adjust this according to your model
+    public function index(Request $request)
+    {   
+        $kategoriId = $request->get('kategori'); // Ambil kategori yang dipilih
+        
+        // Ambil kategori jika ada, jika tidak, tampilkan semua buku
+        if ($kategoriId) {
+            $buku = Buku::with('peminjaman')->where('id_kategori', $kategoriId)->get();
+        } else {
+            $buku = Buku::with('peminjaman')->get(); // Tampilkan semua buku jika tidak ada kategori yang dipilih
+        }
+        
+        $kategori = Kategori::all(); // Ambil semua kategori
         return view('admin.home', compact('buku','kategori')); // Pass the $buku variable to the view
     }
+    
 
     // Fungsi untuk logout admin
     public function logout(Request $request)

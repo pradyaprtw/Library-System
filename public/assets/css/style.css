@@ -49,6 +49,15 @@ p{
     font-size: 16px; /* Sesuaikan ukuran font */
 }
 .profile-menu a:hover {
-    background-color: #8C2D45; /* Warna saat di-hover */
+    background-color: #FFF4B7; /* Warna saat di-hover */
 }
 
+.label {
+    color: #FFF4B7; 
+
+}
+
+.value {
+    color: #FEF3E2; 
+    font-weight: bold;
+}

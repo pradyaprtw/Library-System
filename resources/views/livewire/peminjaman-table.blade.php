@@ -1,4 +1,16 @@
 <div>
+    @if (session()->has('message'))
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
+    @endif
+
+    @if (session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <a href="{{ route('peminjaman.create') }}" class="btn btn-sm mb-3" style="background-color: #B03052; color: #FFF4B7">Tambah Peminjaman</a>
 
     <div class="card">
@@ -20,9 +32,11 @@
                             <td>{{ $peminjamanItem->buku->judul_buku }}</td>
                             <td>{{ $peminjamanItem->users->nama ?? 'Nama tidak tersedia'}}</td>
                             <td>{{ $peminjamanItem->tanggal_peminjaman }}</td>
-                            <td>{{ $peminjamanItem->tanggal_pengembalian}}</td>
+                            <td>{{ $peminjamanItem->tanggal_pengembalian }}</td>
                             <td>
-                                @if($peminjamanItem->status == 'Dipinjam')
+                                @if($peminjamanItem->status == 'Menunggu Konfirmasi')
+                                    <span wire:click="changeStatus({{ $peminjamanItem->id }})" class="btn badge bg-warning">Menunggu Konfirmasi</span>
+                                @elseif($peminjamanItem->status == 'Dipinjam')
                                     <span class="badge bg-info">Dipinjam</span>
                                 @elseif($peminjamanItem->status == 'Dikembalikan')
                                     <span class="badge bg-success">Dikembalikan</span>
@@ -31,7 +45,7 @@
                                 @endif
                             </td>
                             <td>
-                                {{-- <a href="{{ route('peminjaman.edit', $peminjamanItem->id) }}" class="badge bg-warning">Edit</a> --}}
+                                
                                 <button wire:click="delete({{ $peminjamanItem->id }})" class="btn badge bg-danger">Hapus</button>
                             </td>
                         </tr>
@@ -41,4 +55,4 @@
         </div>
     </div>
 </div>
-</div>
+

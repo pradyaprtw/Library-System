@@ -49,7 +49,7 @@
         </div>
         <div class="d-flex justify-content-between">
             <a class="btn btn-link" style="color: #B03052" href="{{ route('register') }}">Sign Up</a>
-            <a class="btn btn-link" style="color: #B03052" href="...">Forgot Password?</a>
+            {{-- <a class="btn btn-link" style="color: #B03052" href="{{ route('forgot.password') }}">Forgot Password?</a> --}}
         </div>
       </form>    
   </div>

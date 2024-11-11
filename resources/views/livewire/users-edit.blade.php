@@ -25,7 +25,7 @@
                     <input type="text" class="form-control @error('no_telepon') is-invalid @enderror"
                             id="no_telepon" wire:model="no_telepon" required>
                     @error('no_telepon')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback">"{{ $message }}"</div>
                     @enderror
                 </div>
                 <div class="mb-3">

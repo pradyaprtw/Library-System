@@ -2,9 +2,21 @@
 
 @section('title', 'Home Admin')
 @section('content')
-  @include('/admin/header')
+@include('/admin/header')
   
   <div class="container mt-4">
+    <div class="row mb-4">
+    <div class="col-md-4">
+        <form action="{{ route('admin.home') }}" method="GET">
+            <select name="kategori" class="form-control" style="background-color: #B03052; color: #FFF4B7;" onchange="this.form.submit()">
+                <option value="">Pilih Kategori</option>
+                @foreach($kategori as $kategoriItem)
+                    <option value="{{ $kategoriItem->id }}" {{ request('kategori') == $kategoriItem->id ? 'selected' : '' }}>{{ $kategoriItem->nama_kategori }}</option>
+                @endforeach
+            </select>
+        </form>
+    </div>
+</div>
     <div class="row"> <!-- Bootstrap row -->
       @foreach ($buku as $item)
       <div class="col-md-3"> <!-- Set column width -->
