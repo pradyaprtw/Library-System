@@ -10,14 +10,21 @@ use Illuminate\Http\Request;
 
 class AnggotaController extends Controller
 {
-    public function index()
-    {
-        $buku = Buku::with('peminjaman')->get();
-        // $buku = Buku::all(); // Adjust this according to your model
-        $kategori = Kategori::all(); // Adjust this according to your model
+    public function index(Request $request)
+    {   
+        $kategoriId = $request->get('kategori'); // Ambil kategori yang dipilih
+        
+        // Ambil kategori jika ada, jika tidak, tampilkan semua buku
+        if ($kategoriId) {
+            $buku = Buku::with('peminjaman')->where('id_kategori', $kategoriId)->get();
+        } else {
+            $buku = Buku::with('peminjaman')->get(); // Tampilkan semua buku jika tidak ada kategori yang dipilih
+        }
+        
+        $kategori = Kategori::all(); // Ambil semua kategori
         return view('anggota.home', compact('buku','kategori')); // Pass the $buku variable to the view
     }
-
+    
     public function edit($id)
     {
         return view('anggota.profile_edit', [

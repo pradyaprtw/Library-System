@@ -20,4 +20,19 @@ class PeminjamanTable extends Component
         $peminjaman = PeminjamanModel::all();
         return view('livewire.peminjaman-table', compact('peminjaman'));
     }
+
+    public function changeStatus($id)
+    {
+        $peminjaman = PeminjamanModel::findOrFail($id);
+        if($peminjaman && $peminjaman->status == 'Menunggu Konfirmasi'){
+            $peminjaman->status = 'Dipinjam';
+            $peminjaman->save();
+
+            session()->flash('message', 'Peminjaman disetujui!');
+        }else {
+            session()->flash('error', 'Peminjaman tidak dapat disetujui.');
+        }
+
+    }
+
 }

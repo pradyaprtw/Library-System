@@ -13,7 +13,10 @@ class RedirectIfAuthenticated
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  string ...$guards
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
@@ -21,7 +24,21 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $user = Auth::user();
+
+                // Simpan URL sebelumnya di session
+                $previousUrl = url()->previous();
+                session(['previous_url' => $previousUrl]);
+
+                // Redirect pengguna berdasarkan role
+                if ($user->role_id == 1) {
+                    return redirect(session('previous_url', '/admin/home'));
+                } elseif ($user->role_id == 2) {
+                    return redirect(session('previous_url', '/anggota/home'));
+                }
+
+                // Fallback jika tidak ada role yang sesuai
+                return redirect(session('previous_url', RouteServiceProvider::HOME));
             }
         }
 

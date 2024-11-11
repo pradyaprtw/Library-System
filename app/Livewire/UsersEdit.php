@@ -22,7 +22,7 @@ class UsersEdit extends Component
         $this->no_telepon = $user->no_telepon;
         $this->email = $user->email;
         $this->username = $user->username;
-        $this->password = $user->password;
+        $this->password = '';
     }
 
     public function update()
@@ -33,7 +33,7 @@ class UsersEdit extends Component
             'no_telepon' => 'required|string|max:255',
             'email' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'password' => 'required|string|min:8',
+            'password' => 'null|string|min:8',
         ]);
 
         $user = UserModel::findOrFail($this->userId);

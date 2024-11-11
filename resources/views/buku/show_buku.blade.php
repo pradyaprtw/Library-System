@@ -14,13 +14,13 @@
                         style="max-width: 50%;">
                 </div>
                 <div class="col-md-6">
-                    <p> Judul Buku: {{ $buku->judul_buku }} </p>
-                    <p> Penulis: {{ $buku->penulis }} </p>
-                    <p> Penerbit: {{ $buku->penerbit }} </p>
-                    <p> Tahun Terbit: {{ $buku->tahun_terbit }} </p>
-                    <p> Kategori: {{ $buku->kategori->nama_kategori }} </p>
-                    <p> Stok: {{ $buku->stok }} </p>
-                </div>
+                    <p><span class="label">Judul Buku:</span> <span class="value">{{ $buku->judul_buku }}</span></p>
+                    <p><span class="label">Penulis:</span> <span class="value">{{ $buku->penulis }}</span></p>
+                    <p><span class="label">Penerbit:</span> <span class="value">{{ $buku->penerbit }}</span></p>
+                    <p><span class="label">Tahun Terbit:</span> <span class="value">{{ $buku->tahun_terbit }}</span></p>
+                    <p><span class="label">Kategori:</span> <span class="value">{{ $buku->kategori->nama_kategori }}</span></p>
+                    <p><span class="label">Stok:</span> <span class="value">{{ $buku->stok }}</span></p>
+                </div>                
             </div>
         </div>
     </div>
