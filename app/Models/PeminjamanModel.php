@@ -21,8 +21,6 @@ class PeminjamanModel extends Model
         'waktu_peminjaman',
         'denda',
         'tanggal_dikembalikan',
-        'bukti_pembayaran',
-        'metode_pembayaran'
     ];
 
     public function buku()
@@ -33,5 +31,9 @@ class PeminjamanModel extends Model
     public function users()
     {
         return $this->belongsTo(UserModel::class, 'id_anggota');
+    }
+
+    public function pembayaran(){
+        return $this->hasOne(PembayaranModel::class, 'id_peminjaman');
     }
 }

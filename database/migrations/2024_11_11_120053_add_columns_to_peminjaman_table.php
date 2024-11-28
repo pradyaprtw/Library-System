@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::table('peminjaman', function (Blueprint $table) {
             $table->decimal('denda', 8, 2)->default(0);
             $table->date('tanggal_dikembalikan')->nullable();
-            $table->string('bukti_pembayaran')->nullable();
-            $table->string('metode_pembayaran')->nullable();
         });
     }
 
@@ -27,8 +25,6 @@ return new class extends Migration
         Schema::table('peminjaman', function (Blueprint $table) {
             $table->dropColumn('denda');
             $table->dropColumn('tanggal_dikembalikan')->nullable();
-            $table->dropColumn('bukti_pembayaran')->nullable();
-            $table->dropColumn('metode_pembayaran')->nullable();
         });
     }
 };

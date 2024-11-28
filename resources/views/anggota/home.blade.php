@@ -45,12 +45,15 @@
                         <span class="badge bg-warning">Menunggu Konfirmasi</span>
                     @elseif ($statusPeminjaman === 'Dipinjam')    
                         <span class="badge bg-info">Dipinjam</span>
-                        @if (is_null($denda) || $denda == 0)
-                        <form action="{{ route('buku.kembalikan', $item->id) }}" method="POST" class="mt-2">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">Kembalikan</button>
-                        </form>
-                    @endif
+                        @php
+                            $pembayaran = optional($item->peminjaman)->pembayaran;
+                        @endphp
+                        @if ($denda > 0 && $pembayaran && $pembayaran->pembayaran_status == 'Konfirmasi')
+                            <form action="{{ route('buku.kembalikan', $item->id) }}" method="POST" class="mt-2">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">Kembalikan</button>
+                            </form>
+                        @endif
 
                     @elseif ($statusPeminjaman === 'Dikembalikan')
                         <span class="badge bg-success">Dikembalikan</span>

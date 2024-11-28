@@ -16,9 +16,9 @@ class AnggotaController extends Controller
         
         // Ambil kategori jika ada, jika tidak, tampilkan semua buku
         if ($kategoriId) {
-            $buku = Buku::with('peminjaman')->where('id_kategori', $kategoriId)->get();
+            $buku = Buku::with(['peminjaman.pembayaran'])->where('id_kategori', $kategoriId)->get();
         } else {
-            $buku = Buku::with('peminjaman')->get(); // Tampilkan semua buku jika tidak ada kategori yang dipilih
+            $buku = Buku::with(['peminjaman.pembayaran'])->get(); // Tampilkan semua buku jika tidak ada kategori yang dipilih
         }
         
         $kategori = Kategori::all(); // Ambil semua kategori

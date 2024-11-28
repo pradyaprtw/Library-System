@@ -4,6 +4,7 @@
 @section('title', 'Riwayat Denda')
 
 @include('/anggota/header')
+
 <div class="container mt-4">
     <h3>Denda Anda</h3>
     <table class="table table-bordered">
@@ -12,29 +13,36 @@
                 <th>Judul Buku</th>
                 <th>Jumlah Denda</th>
                 <th>Status</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
             @forelse($denda as $item)
                 <tr>
                     <td>{{ $item->buku->judul_buku }}</td>
-                    <td>Rp {{ number_format($item->denda, 0, '.') }}</td>
+                    <td>Rp {{ number_format($item->denda, 0, '.', '.') }}</td>
                     <td>
-                        @if($item->bukti_pembayaran != null)
-                            <span class="text-success">Sudah Dibayarkan</span>
+                        @if($item->pembayaran && $item->pembayaran->pembayaran_status)
+                            <span class="text {{ $item->pembayaran->pembayaran_status == 'Pending' ? 'text-danger' : 'text-success' }}">
+                                {{ $item->pembayaran->pembayaran_status }}
+                            </span>
                         @else
-                            <button class="btn btn-primary bayarDendaBtn" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#dendaModal"
-                                    data-id="{{ $item->id }}"
-                                    data-buku="{{ $item->buku->judul_buku }}"
-                                    data-denda="{{ $item->denda }}">
-                                Bayar Denda
-                            </button>
+                            <span class="text-danger">Belum Dibayarkan</span>
                         @endif
                     </td>
+                    <td>
+                        <button class="btn btn-primary bayarDendaBtn" 
+                                @if($item->pembayaran && $item->pembayaran->pembayaran_status == 'Konfirmasi') disabled @endif
+                                data-bs-toggle="modal" 
+                                data-bs-target="#dendaModal"
+                                data-id="{{ $item->id }}"
+                                data-buku="{{ $item->buku->judul_buku }}"
+                                data-denda="{{ $item->denda }}">
+                            Bayar Denda
+                        </button>
+                    </td>
                 </tr>
-            @empty
+                @empty
                 <tr>
                     <td colspan="3" class="text-center">Anda belum memiliki denda.</td>
                 </tr>
@@ -105,4 +113,5 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
+
 @endsection

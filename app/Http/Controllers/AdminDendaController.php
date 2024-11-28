@@ -10,4 +10,5 @@ class AdminDendaController extends Controller
     {
         return view('admin.riwayat_denda');
     }
+    
 }
