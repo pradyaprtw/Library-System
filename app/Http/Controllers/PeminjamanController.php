@@ -7,6 +7,7 @@ use App\Models\Kategori;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\PembayaranModel;
 use App\Models\PeminjamanModel;
 use Illuminate\Support\Facades\Session;
 
@@ -98,35 +99,42 @@ class PeminjamanController extends Controller
 
     public function konfirmasiPembayaranDenda(Request $request, $id)
     {
+        // Temukan peminjaman dan pembayaran berdasarkan ID
         $peminjaman = PeminjamanModel::findOrFail($id);
-
+    
         // Validasi pembayaran
         $request->validate([
             'metode_pembayaran' => 'required|in:cash,transfer',
-            'bukti_pembayaran' => 'required|image|max:2048'
+            'bukti_pembayaran' => 'required|image|max:2048',
         ]);
-
+    
         // Simpan bukti pembayaran
         $buktiPembayaranPath = $request->file('bukti_pembayaran')->store('bukti_denda', 'public');
+    
+        // Buat entri pembayaran baru dengan status pending
+        PembayaranModel::create([
+            'id_peminjaman' => $id,
+            'bukti_pembayaran' => $buktiPembayaranPath,
+            'metode_pembayaran' => $request->metode_pembayaran,
+            'pembayaran_status' => 'Pending',
+        ]);
 
-        // Update status denda
-        // $peminjaman->denda = ;
-        $peminjaman->bukti_pembayaran = $buktiPembayaranPath;
-        $peminjaman->metode_pembayaran = $request->metode_pembayaran;
         $peminjaman->status = 'Dikembalikan';
+        $peminjaman->tanggal_dikembalikan = now();
         $peminjaman->save();
-
-        // Sweetalert untuk konfirmasi pembayaran
+    
+        // Mengarahkan ke halaman sebelumnya dengan notifikasi sukses
         return redirect()->back()->with([
-            'success' => 'Denda berhasil dibayar!',
-            'title' => 'Pembayaran Berhasil'
+            'success' => 'Denda berhasil dibayar! Tunggu konfirmasi admin.',
+            'title' => 'Pembayaran Denda'
         ]);
     }
+    
 
     public function riwayatDenda()
     {
         $kategori = Kategori::all();
-        $denda = PeminjamanModel::with('buku.kategori')
+        $denda = PeminjamanModel::with(['buku.kategori', 'pembayaran'])
             ->where('id_anggota', auth()->id())
             ->where('denda', '>', 0)
             ->get();
