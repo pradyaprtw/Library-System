@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('peminjaman', function (Blueprint $table) {
-            $table->integer('waktu_peminjaman')->default(10);
-            $table->integer('denda')->default(0);
+            $table->decimal('denda', 8, 2)->default(0);
+            $table->date('tanggal_dikembalikan')->nullable();
+            $table->string('bukti_pembayaran')->nullable();
+            $table->string('metode_pembayaran')->nullable();
         });
     }
 
@@ -23,8 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('peminjaman', function (Blueprint $table) {
-            $table->dropColumn('waktu_peminjaman');
             $table->dropColumn('denda');
+            $table->dropColumn('tanggal_dikembalikan')->nullable();
+            $table->dropColumn('bukti_pembayaran')->nullable();
+            $table->dropColumn('metode_pembayaran')->nullable();
         });
     }
 };

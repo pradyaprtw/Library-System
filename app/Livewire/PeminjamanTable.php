@@ -17,7 +17,9 @@ class PeminjamanTable extends Component
     }
     public function render()
     {
-        $peminjaman = PeminjamanModel::all();
+        $peminjaman = PeminjamanModel::orderByRaw("FIELD(status, 'Menunggu Konfirmasi') DESC")
+        ->orderBy('created_at', 'desc')
+        ->get();
         return view('livewire.peminjaman-table', compact('peminjaman'));
     }
 

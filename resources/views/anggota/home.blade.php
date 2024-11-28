@@ -5,6 +5,10 @@
 @include('/anggota/header')
 @include('/modal/modal_peminjaman')
 
+@if(session('denda'))
+    <div class="alert alert-info">{{ session('denda') }}</div>
+@endif
+
 <div class="container mt-4">
 <div class="row mb-4">
     <div class="col-md-4">
@@ -35,15 +39,19 @@
                     {{-- Menampilkan status peminjaman --}}
                     @php
                         $statusPeminjaman = optional($item->peminjaman)->status;
+                        $denda = optional($item->peminjaman)->denda;
                     @endphp
                     @if ($statusPeminjaman === 'Menunggu Konfirmasi')
                         <span class="badge bg-warning">Menunggu Konfirmasi</span>
                     @elseif ($statusPeminjaman === 'Dipinjam')    
                         <span class="badge bg-info">Dipinjam</span>
+                        @if (is_null($denda) || $denda == 0)
                         <form action="{{ route('buku.kembalikan', $item->id) }}" method="POST" class="mt-2">
                             @csrf
                             <button type="submit" class="btn btn-danger btn-sm">Kembalikan</button>
                         </form>
+                    @endif
+
                     @elseif ($statusPeminjaman === 'Dikembalikan')
                         <span class="badge bg-success">Dikembalikan</span>
                         {{-- Menampilkan tombol pinjam jika stok tersedia --}}
@@ -60,12 +68,12 @@
                     @else
                         <span class="badge bg-secondary">Tidak Ada Peminjaman</span>
                         @if ($item->stok > 0)
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#pinjamModal{{ $item->id }}">
-                            Pinjam
-                        </button>
-                    @else
-                        <span class="badge bg-warning">Stok Habis</span>
-                    @endif
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#pinjamModal{{ $item->id }}">
+                                Pinjam
+                            </button>
+                        @else
+                            <span class="badge bg-warning">Stok Habis</span>
+                        @endif
                     
                     @endif
 

@@ -18,6 +18,11 @@ class PeminjamanModel extends Model
         'tanggal_peminjaman',
         'tanggal_pengembalian',
         'status',
+        'waktu_peminjaman',
+        'denda',
+        'tanggal_dikembalikan',
+        'bukti_pembayaran',
+        'metode_pembayaran'
     ];
 
     public function buku()

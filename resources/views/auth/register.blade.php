@@ -59,14 +59,17 @@
         </div>
         <div>
           <label class="form-label" for="password">Password</label>
-          <input class="form-control" type="password" name="password" id="password" required>        
+          <input class="form-control" type="password" name="password" id="password" required>     
+          @error('password')
+            <div class="text-danger">{{ $message }}</div>
+          @enderror   
         </div>
         <div>
           <button class="btn btn-custom form-control" type="submit">Register</button>
         </div>
         <div class="d-flex justify-content-between">
           <a class="btn btn-link" style="color: #B03052" href="login">Sign In</a>
-          <a class="btn btn-link" style="color: #B03052" href="...">Forgot Password?</a>
+          {{-- <a class="btn btn-link" style="color: #B03052" href="...">Forgot Password?</a> --}}
         </div>
       </form>
     </div>
