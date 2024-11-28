@@ -33,7 +33,7 @@ class UsersEdit extends Component
             'no_telepon' => 'required|string|max:255',
             'email' => 'required|string|max:255',
             'username' => 'required|string|max:255',
-            'password' => 'null|string|min:8',
+            'password' => 'nullable|string|min:8',
         ]);
 
         $user = UserModel::findOrFail($this->userId);

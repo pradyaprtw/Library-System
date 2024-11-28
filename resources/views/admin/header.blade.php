@@ -32,7 +32,7 @@
                               Dropdown
                           </a>
                           <ul class="dropdown-menu" style="background-color: #B03052; color: #FFF4B7;">
-                              <li><a class="dropdown-item" style="color: #FFF4B7;" href="#">Action</a></li>
+                              <li><a class="dropdown-item" style="color: #FFF4B7;" href="{{route('admin.denda')}}">Riwayat Denda</a></li>
                               <li><a class="dropdown-item" style="color: #FFF4B7;" href="#">Another action</a></li>
                               <li><hr class="dropdown-divider" style="border-color: #FFF4B7;"></li>
                               <li><a class="dropdown-item" style="color: #FFF4B7;" href="#">Something else here</a></li>

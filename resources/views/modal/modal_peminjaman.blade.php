@@ -12,7 +12,7 @@
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="tanggal_pengembalian{{ $item->tanggal_pengembalian }}">Tanggal Pengembalian? (maks 10 hari)</label>
+                        <label for="tanggal_pengembalian{{ $item->tanggal_pengembalian }}">Tanggal Pengembalian? (maks 5 hari)</label>
                         <input type="date" class="form-control" id="tanggal_pengembalian{{ $item->id }}" name="tanggal_pengembalian" required>
                     </div>
                 </div>

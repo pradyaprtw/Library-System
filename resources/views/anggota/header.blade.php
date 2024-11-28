@@ -1,4 +1,3 @@
-
 <div class="container">
     <nav class="navbar bg-body-sm fixed-top" style="background-color: #B03052;">
         <div class="container-fluid">
@@ -14,8 +13,9 @@
                         <ul class="list-unstyled">
                             <li><a href="{{ route('anggota.home')}}" class="dropdown-item">Home</a></li>
                             <li><a href="{{ route('anggota.profile', Auth::user()->id) }}" class="dropdown-item">Edit Profile</a></li>
-                            <li><a href="{{ route('logout') }}" class="dropdown-item">Logout</a></li>
                             <li><a href="{{ route('anggota.riwayat') }}" class="dropdown-item">Riwayat Peminjaman</a></li>
+                            <li><a href="{{ route('anggota.denda') }}" class="dropdown-item">Denda</a></li>
+                            <li><a href="{{ route('logout') }}" class="dropdown-item">Logout</a></li>
                         </ul>
                     </div>
                 </div>

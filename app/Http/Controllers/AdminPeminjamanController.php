@@ -31,4 +31,10 @@ class AdminPeminjamanController extends Controller
         $peminjaman->save();
         return view('peminjaman.index', compact('peminjaman'));
     }
+
+    // public function riwayatDenda(){
+    //     $denda = PeminjamanModel::where('denda', '>', 0)->get();
+
+    //     return view('admin.riwayat_denda', compact('denda'));
+    // }
 }

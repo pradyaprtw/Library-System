@@ -22,6 +22,7 @@
                         <th>Nama Anggota</th>
                         <th>Tanggal Pinjam</th>
                         <th>Tanggal Kembali</th>
+                        <th>Denda</th>
                         <th>Status</th>
                         <th>Aksi</th>
                     </tr>
@@ -33,6 +34,7 @@
                             <td>{{ $peminjamanItem->users->nama ?? 'Nama tidak tersedia'}}</td>
                             <td>{{ $peminjamanItem->tanggal_peminjaman }}</td>
                             <td>{{ $peminjamanItem->tanggal_pengembalian }}</td>
+                            <td>{{ $peminjamanItem->denda }}</td>
                             <td>
                                 @if($peminjamanItem->status == 'Menunggu Konfirmasi')
                                     <span wire:click="changeStatus({{ $peminjamanItem->id }})" class="btn badge bg-warning">Menunggu Konfirmasi</span>
