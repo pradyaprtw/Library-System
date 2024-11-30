@@ -1,6 +1,5 @@
 @foreach ($buku as $item)
     
-<!-- Modal Peminjaman -->
 <div class="modal fade" id="pinjamModal{{ $item->id }}" tabindex="-1" aria-labelledby="pinjamModalLabel{{ $item->id }}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

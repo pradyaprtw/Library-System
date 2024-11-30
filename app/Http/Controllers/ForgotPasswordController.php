@@ -23,12 +23,11 @@ class ForgotPasswordController extends Controller
 
         if (!$user) {
             // Return back with an error message if username is not found
-            return back()->withErrors(['username' => 'The username does not exist in our records.']);
+            return back()->with('error', 'Username '. "$request->username" . ' tidak ditemukan.');
         }
 
         // Redirect to the reset password form with the username as a parameter
-        return redirect()->route('reset-password.form', ['username' => $user->username])
-                        ->with('status', 'Username verified! Proceed to reset your password.');
+        return redirect()->route('reset-password.form', ['username' => $user->username]);
     }
 
 
@@ -53,6 +52,6 @@ class ForgotPasswordController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect()->route('login')->with('success', 'Password reset successfully.');
+        return redirect()->route('login')->with('success', 'Password berhasil diubah.');
     }
 }

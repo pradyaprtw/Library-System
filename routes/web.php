@@ -23,6 +23,10 @@ Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/registerProses', [AuthController::class, 'registerProses'])->name('register.proses');
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate'); 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'handleForgotPassword'])->name('forgot-password.submit');
+Route::get('/reset-password/{username}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset-password.form');
+Route::post('/reset-password/{username}', [ForgotPasswordController::class, 'handleResetPassword'])->name('reset-password.submit');
 
 // Route::match(['get', 'post'], '/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');
 
@@ -52,10 +56,6 @@ Route::prefix('anggota')->middleware(['auth', 'checkRole:2'])->group(function ()
 });
 
 // Route untuk forgot password
-Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'handleForgotPassword'])->name('forgot-password.submit');
-Route::get('/reset-password/{username}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset-password.form');
-Route::post('/reset-password/{username}', [ForgotPasswordController::class, 'handleResetPassword'])->name('reset-password.submit');
 
 
 // Rute dengan middleware auth
