@@ -61,3 +61,35 @@ p{
     color: #FEF3E2; 
     font-weight: bold;
 }
+
+
+    .main{
+      height: 100vh;
+      box-sizing: border-box;
+    }
+    .login-box{
+      width: 500px;
+      border: solid 1px;
+      padding: 35px;
+    }
+    .register-box{
+        width: 500px;
+        border: solid 1px;
+        padding: 20px;
+        margin-top: 200px;
+      }
+    form div {
+      margin-bottom: 15px;
+    }
+    h3 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .btn-custom{
+      background-color: #B03052;
+      color: #FFF4B7; 
+    }
+    .btn-custom:hover{
+      background-color: #D76C82;
+      color: #B03052;
+    }
