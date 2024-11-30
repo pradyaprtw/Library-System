@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminDendaController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\AdminAnggotaController;
 use App\Http\Controllers\AdminPeminjamanController;
+use App\Http\Controllers\ForgotPasswordController;
 
 // Route untuk halaman welcome
 Route::get('/', function () {
@@ -49,6 +50,13 @@ Route::prefix('anggota')->middleware(['auth', 'checkRole:2'])->group(function ()
     // Route::get('/denda/{id}/bayar', [PeminjamanController::class, 'bayarDenda'])->name('bayar.denda');
     Route::post('/denda/{id}', [PeminjamanController::class, 'konfirmasiPembayaranDenda'])->name('konfirmasi.denda');
 });
+
+// Route untuk forgot password
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot-password');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'handleForgotPassword'])->name('forgot-password.submit');
+Route::get('/reset-password/{username}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset-password.form');
+Route::post('/reset-password/{username}', [ForgotPasswordController::class, 'handleResetPassword'])->name('reset-password.submit');
+
 
 // Rute dengan middleware auth
 // Route::middleware('auth')->group(function () {
