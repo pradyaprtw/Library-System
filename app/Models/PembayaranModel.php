@@ -14,7 +14,7 @@ class PembayaranModel extends Model
         'id_peminjaman',
         'bukti_pembayaran',
         'metode_pembayaran',
-        'status'
+        'pembayaran_status'
     ];
 
     public function peminjaman()

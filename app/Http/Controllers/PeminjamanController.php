@@ -122,6 +122,11 @@ class PeminjamanController extends Controller
         $peminjaman->status = 'Dikembalikan';
         $peminjaman->tanggal_dikembalikan = now();
         $peminjaman->save();
+
+        // Kembalikan stok buku bertambah
+        $buku = Buku::findOrFail($peminjaman->id_buku);
+        $buku->stok++;
+        $buku->save();
     
         // Mengarahkan ke halaman sebelumnya dengan notifikasi sukses
         return redirect()->back()->with([
@@ -130,15 +135,16 @@ class PeminjamanController extends Controller
         ]);
     }
     
+    
 
-    public function riwayatDenda()
-    {
-        $kategori = Kategori::all();
-        $denda = PeminjamanModel::with(['buku.kategori', 'pembayaran'])
-            ->where('id_anggota', auth()->id())
-            ->where('denda', '>', 0)
+        public function riwayatDenda()
+        {
+            $kategori = Kategori::all();
+            $denda = PeminjamanModel::where('denda', '>', 0)
+            ->orderBy('updated_at', 'desc')
             ->get();
+            return view('anggota.denda', compact('denda', 'kategori'));
+        }
 
-        return view('anggota.denda', compact('denda', 'kategori'));
-    }
+    
 }

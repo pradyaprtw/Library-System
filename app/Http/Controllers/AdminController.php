@@ -2,39 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Buku;
+use App\Models\User;
 use App\Models\Kategori;
+use Illuminate\Http\Request;
+use App\Models\PeminjamanModel;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     // Menampilkan halaman home untuk admin
-    public function index(Request $request)
-    {   
-        $kategoriId = $request->get('kategori'); // Ambil kategori yang dipilih
+   // AdminController
+   public function index(Request $request)
+   {   
+       $buku = Buku::all();
+       $kategori = Kategori::all();
+       $users = User::where('role_id', 2)->get();
+       $peminjaman = PeminjamanModel::all();
+       
+       $peminjamanTerbaru = PeminjamanModel::with(['users', 'buku'])
+           ->where('status', 'Dipinjam')
+           ->latest()
+           ->take(10)
+           ->get();
         
-        // Ambil kategori jika ada, jika tidak, tampilkan semua buku
-        if ($kategoriId) {
-            $buku = Buku::with('peminjaman')->where('id_kategori', $kategoriId)->get();
-        } else {
-            $buku = Buku::with('peminjaman')->get(); // Tampilkan semua buku jika tidak ada kategori yang dipilih
-        }
-        
-        $kategori = Kategori::all(); // Ambil semua kategori
-        return view('admin.home', compact('buku','kategori')); // Pass the $buku variable to the view
-    }
-    
+        $stokBuku = Buku::select('judul_buku', 'stok')->get();
 
-    // Fungsi untuk logout admin
-    public function logout(Request $request)
-    {
-        Auth::guard('admin')->logout(); // Logout admin
-        $request->session()->invalidate(); // Menghapus session
-        $request->session()->regenerateToken(); // Regenerasi CSRF token
-
-        return redirect('/admin/login')->with('success', 'Anda telah logout'); // Redirect ke halaman login
-    }
+       $peminjamanAktif = PeminjamanModel::where('status', 'Dipinjam')->get();
+       $totalDenda = PeminjamanModel::sum('denda');
+       $bukuTersedia = Buku::sum('stok');
+   
+       return view('admin.home', compact(
+           'buku', 'kategori', 'users', 'peminjaman', 
+            'peminjamanTerbaru', 
+           'peminjamanAktif', 'totalDenda', 'bukuTersedia', 'stokBuku'
+       ));
+   }
 
     public function destroy($id){
         $buku = Buku::findOrFail($id);
@@ -44,5 +47,4 @@ class AdminController extends Controller
 
     }
 
-    // Tambahkan metode lainnya sesuai kebutuhan
 }

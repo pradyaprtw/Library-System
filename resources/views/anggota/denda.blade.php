@@ -6,49 +6,63 @@
 @include('/anggota/header')
 
 <div class="container mt-4">
-    <h3>Denda Anda</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Judul Buku</th>
-                <th>Jumlah Denda</th>
-                <th>Status</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($denda as $item)
-                <tr>
-                    <td>{{ $item->buku->judul_buku }}</td>
-                    <td>Rp {{ number_format($item->denda, 0, '.', '.') }}</td>
-                    <td>
-                        @if($item->pembayaran && $item->pembayaran->pembayaran_status)
-                            <span class="text {{ $item->pembayaran->pembayaran_status == 'Pending' ? 'text-danger' : 'text-success' }}">
-                                {{ $item->pembayaran->pembayaran_status }}
-                            </span>
-                        @else
-                            <span class="text-danger">Belum Dibayarkan</span>
-                        @endif
-                    </td>
-                    <td>
-                        <button class="btn btn-primary bayarDendaBtn" 
-                                @if($item->pembayaran && $item->pembayaran->pembayaran_status == 'Konfirmasi') disabled @endif
-                                data-bs-toggle="modal" 
-                                data-bs-target="#dendaModal"
-                                data-id="{{ $item->id }}"
-                                data-buku="{{ $item->buku->judul_buku }}"
-                                data-denda="{{ $item->denda }}">
-                            Bayar Denda
-                        </button>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="3" class="text-center">Anda belum memiliki denda.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Denda Anda</div>
+                <div class="card-body">
+                    <table id="tbl_list" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Judul Buku</th>
+                                <th>Jumlah Denda</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($denda->sortBy(function ($item) {
+                                // Jika ada bukti pembayaran, maka urutkan berdasarkan tanggal bukti pembayaran
+                                // Jika tidak ada bukti pembayaran, maka urutkan berdasarkan null (tidak ada urutan)
+                                return ($item->pembayaran && $item->pembayaran->pembayaran_status === 'Konfirmasi' ? 2 : ($item->pembayaran && $item->pembayaran->pembayaran_status === 'Pending' ? 0 : 1));
+                            }) as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->buku->judul_buku }}</td>
+                                    <td>Rp {{ number_format($item->denda, 0, '.', '.') }}</td>
+                                    <td>
+                                        @if($item->pembayaran && $item->pembayaran->pembayaran_status)
+                                            <span class="text {{ $item->pembayaran->pembayaran_status == 'Pending' ? 'text-danger' : ($item->pembayaran->pembayaran_status == 'Konfirmasi' ? 'text-success' : '') }}">
+                                                {{ $item->pembayaran->pembayaran_status == 'Konfirmasi' ? 'Diterima' : $item->pembayaran->pembayaran_status }}
+                                            </span>
+                                        @else
+                                            <span class="text-warning">Belum Dibayar</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary bayarDendaBtn"
+                                                @if($item->pembayaran && $item->pembayaran->pembayaran_status =='Konfirmasi' || $item->pembayaran && $item->pembayaran->pembayaran_status == 'Pending') disabled @endif
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#dendaModal"
+                                                data-id="{{ $item->id }}"
+                                                data-buku="{{ $item->buku->judul_buku }}"
+                                                data-denda="{{ $item->denda }}">
+                                            Bayar Denda
+                                        </button>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="3" class="text-center">Anda belum memiliki denda.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal Pembayaran Denda -->

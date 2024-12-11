@@ -55,7 +55,6 @@ class BukuCreate extends Component
         ]);
 
         $this->resetInput();
-        $this->dispatch('bukuAdded');
         session()->flash('success', 'Buku berhasil ditambahkan.');
         return redirect()->route('buku.index');
 

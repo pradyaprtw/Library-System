@@ -25,7 +25,7 @@ class BukuEdit extends Component
         $this->tahun_terbit = $this->buku->tahun_terbit;
         $this->id_kategori = $this->buku->id_kategori;
         $this->stok = $this->buku->stok;
-        $this->foto = $this->buku->foto;
+        // $this->foto = $this->buku->foto;
     }
     public function render()
     {
@@ -41,7 +41,7 @@ class BukuEdit extends Component
             'tahun_terbit' => 'required|integer',
             'id_kategori' => 'required|integer|exists:kategori,id',
             'stok' => 'required|integer|min:1',
-            'foto' => 'required|image|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $imagePath = $this->buku->foto;
@@ -56,10 +56,10 @@ class BukuEdit extends Component
             'tahun_terbit' => $this->tahun_terbit,
             'id_kategori' => $this->id_kategori,
             'stok' => $this->stok,
-            'foto' => $imagePath,
+            'foto' => $imagePath
         ]);
 
-        session()->flash('message', 'Buku berhasil diperbarui.');
+        session()->flash('success', 'Buku berhasil diperbarui.');
         return redirect()->route('buku.index');
     }
 }

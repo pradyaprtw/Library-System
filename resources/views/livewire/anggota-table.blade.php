@@ -1,6 +1,6 @@
 <div>
-    <a href="{{ route('anggota.create') }}" class="btn btn-sm mb-3" style="background-color: #B03052; color: #FFF4B7">Tambah Anggota</a>
-    <table class="table">
+    <a href="{{ route('anggota.create') }}" class="btn btn-primary mb-3">Tambah Anggota</a>
+    <table id="tbl_list" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th>Nama</th>
@@ -22,7 +22,7 @@
                     <td>{{ $anggotaItem->tanggal_daftar }}</td>
                     <td>{{ $anggotaItem->role->nama ?? 'N/A' }}</td>
                     <td>
-                        <a href="{{ route('anggota.edit', $anggotaItem->id) }}" class="badge bg-warning">Edit</a>
+                        <a href="{{ route('anggota.edit', $anggotaItem->id) }}" class="btn badge bg-warning">Edit</a>
                         <button wire:click="delete({{ $anggotaItem->id }})" class="btn badge bg-danger">Hapus</button>
                     </td>
                 </tr>

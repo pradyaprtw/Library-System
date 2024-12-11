@@ -13,10 +13,9 @@
 @endpush
 
 @section('content')
-<div class="container">
-    <h3 class="mt-4 mb-4">Edit Data Buku</h3>
+<div class="container mt-4">
     <div class="row">
-        @livewire('buku-edit', ['id' => $buku->id]) <!-- Pass the id parameter -->
+        @livewire('buku-edit', ['id' => $buku->id])
     </div>
 </div>
 @endsection

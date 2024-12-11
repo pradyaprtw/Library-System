@@ -34,8 +34,8 @@
                 <button class="btn btn-custom form-control" type="submit">Submit</button>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <a class="btn btn-link" style="color: #B03052" href="{{ route('login') }}">Back to Login</a>
-                    <a class="btn btn-link" style="color: #B03052" href="{{ route('register') }}">Sign Up</a>
+                    <a class="btn btn-link"  href="{{ route('login') }}">Back to Login</a>
+                    <a class="btn btn-link"  href="{{ route('register') }}">Sign Up</a>
                 </div> 
             </form>
     </div>

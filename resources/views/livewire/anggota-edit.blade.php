@@ -2,7 +2,7 @@
     <form wire:submit.prevent="update">
         @csrf
         <div class="card">
-            <div class="card-header">Edit Anggota</div>
+            <div class="card-header">Form Edit Anggota</div>
             <div class="card-body">
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
@@ -46,6 +46,7 @@
                 </div>
                 
                 <button type="submit" class="btn btn-primary">Update Anggota</button>
+                <a href="{{ route('anggota.index') }}" class="btn btn-secondary">Kembali</a>
             </div>
         </div>
     </form>
