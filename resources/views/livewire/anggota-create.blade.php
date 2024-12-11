@@ -2,7 +2,7 @@
     <form wire:submit.prevent="store">
         @csrf
         <div class="card">
-            <div class="card-header">Form</div>
+            <div class="card-header">Form Tambah Anggota</div>
             <div class="card-body">
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
@@ -45,6 +45,7 @@
                     @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Tambah Anggota</button>
+                <a href="{{ route('anggota.index') }}" class="btn btn-secondary">Kembali</a>
             </div>
         </div>
     </form>

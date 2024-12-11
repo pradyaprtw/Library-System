@@ -22,7 +22,7 @@ class UsersEdit extends Component
         $this->no_telepon = $user->no_telepon;
         $this->email = $user->email;
         $this->username = $user->username;
-        $this->password = '';
+        // $this->password = '';
     }
 
     public function update()
@@ -48,9 +48,8 @@ class UsersEdit extends Component
         ]);
 
         $this->resetInput();
-        $this->dispatch('userUpdated', $user->id);
 
-        return redirect()->route('anggota.home')->with('success', 'User updated successfully.');
+        return redirect()->route('anggota.home')->with('success', 'Profil berhasil diperbarui.');
     }
 
     public function render()   

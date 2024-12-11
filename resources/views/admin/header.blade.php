@@ -16,27 +16,19 @@
               <div class="offcanvas-body">
                   <ul class="navbar-nav">
                       <li class="nav-item">
-                          <a class="nav-link" style="color: #FFF4B7;" href="{{ route('buku.index') }}">Buku</a>
+                          <a class="nav-link" href="{{ route('buku.index') }}">Buku</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link" style="color: #FFF4B7;" href="{{ route('anggota.index') }}">Anggota</a>
+                          <a class="nav-link" href="{{ route('anggota.index') }}">Anggota</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link" style="color: #FFF4B7;" href="{{ route('peminjaman.index') }}">Peminjaman</a>
+                          <a class="nav-link" href="{{ route('peminjaman.index') }}">Peminjaman</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link" style="color: #FFF4B7;" href="{{ route('logout') }}">Logout</a>
+                          <a class="nav-link" href="{{ route('admin.denda') }}">Riwayat Denda</a>
                       </li>
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" style="color: #FFF4B7;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              Dropdown
-                          </a>
-                          <ul class="dropdown-menu" style="background-color: #B03052; color: #FFF4B7;">
-                              <li><a class="dropdown-item" style="color: #FFF4B7;" href="{{route('admin.denda')}}">Riwayat Denda</a></li>
-                              <li><a class="dropdown-item" style="color: #FFF4B7;" href="#">Another action</a></li>
-                              <li><hr class="dropdown-divider" style="border-color: #FFF4B7;"></li>
-                              <li><a class="dropdown-item" style="color: #FFF4B7;" href="#">Something else here</a></li>
-                          </ul>
+                      <li class="nav-item pt-5 mt-5 ms-5">
+                          <a class="nav-link" href="{{ route('logout') }}">Logout</a>
                       </li>
                   </ul>
               </div>

@@ -2,7 +2,7 @@
     <form wire:submit.prevent="update">
         @csrf
         <div class="card">
-            <div class="card-header">Edit Anggota</div>
+            <div class="card-header">Edit Profile</div>
             <div class="card-body">
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
@@ -47,13 +47,15 @@
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control @error('password') is-invalid @enderror"
-                           id="password" wire:model="password" required>
+                           id="password" wire:model="password">
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+                    <small class="text-muted">Kosongkan jika tidak ingin mengubah password</small>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update Profile</button>
+                <a href="{{ route('anggota.home') }}" class="btn btn-secondary">Kembali</a>
             </div>
         </div>
     </form>

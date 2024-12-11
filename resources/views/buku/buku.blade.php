@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @include('/admin/header')
+@include('/modal/hapus')
 @section('title', 'Buku')
 
 @push('styles')
@@ -11,13 +12,21 @@
 @endpush
 
 @section('content')
-<div class="container">
-    <h3 class="mt-4 mb-4">Data Buku</h3>
-    {{-- <div class="row">
-        @livewire('buku-create')
-    </div> --}}
-    <div>
-        @livewire('buku-table')
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Data Buku</div>
+                @if (session('message'))
+                <div class='alert alert-success' role='alert'>
+                    {{ session('message') }}
+                </div>
+                @endif
+                <div class="card-body">
+                    @livewire('buku-table')
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

@@ -2,7 +2,7 @@
     <form wire:submit="store">
         @csrf
         <div class="card">
-            <div class="card-header">Form</div>
+            <div class="card-header">Form Tambah Buku</div>
             <div class="card-body">
                 <div class="mb-3">
                     <label for="judul_buku">Judul Buku</label>
@@ -70,9 +70,16 @@
                     @error('foto')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
+
+                    @if ($foto)
+                        <img src="{{ $foto->temporaryUrl() }}" class="img-thumbnail mt-2" width="200">
+                    @else
+                        <span class="text-muted">Belum ada foto</span>
+                    @endif
                 </div>
 
                 <button  type="submit" class="btn btn-primary">Tambah Buku</button>
+                <a href="{{ route('buku.index') }}" class="btn btn-secondary">Kembali</a>
             </div>
         </div>
     </form>

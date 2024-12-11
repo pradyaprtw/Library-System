@@ -49,16 +49,6 @@ class AdminBukuController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $buku = Buku::findOrFail($id);
-        $kategori = Kategori::all();
-        return view('buku.show_buku', compact('buku', 'kategori'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
@@ -100,6 +90,6 @@ class AdminBukuController extends Controller
         $buku = Buku::findOrFail($id); // Mengambil satu buku berdasarkan ID
         $buku->delete();
 
-        return redirect()->route('buku.index')->with('success', 'Data buku berhasil dihapus');
+        return redirect()->back()->with('success', 'Data buku berhasil dihapus');
     }
 }

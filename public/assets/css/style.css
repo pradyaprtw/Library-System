@@ -1,15 +1,4 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-/* Custom Bootstrap Overrides */
-:root {
-    --primary-color: #007bff;
-    --secondary-color: #6c757d;
-    --success-color: #28a745;
-    --danger-color: #dc3545;
-    --warning-color: #ffc107;
-    --info-color: #17a2b8;
-}
 
 body{
     font-family: "Poppins", sans-serif;
@@ -33,28 +22,27 @@ p{
     position: absolute;
     right: 0px;
     top: 40px;
-    background-color: #B03052; /* Sesuaikan warna latar belakang */
+    background-color: #B03052;
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     z-index: 1000;
-    width: 200px; /* Tambahkan lebar untuk membuat menu lebih besar */
-    padding: 10px 0; /* Menambahkan padding atas dan bawah */
+    width: 200px;
+    padding: 10px 0; 
 }
 .profile-menu a {
     display: block;
-    padding: 12px 20px; /* Atur padding kiri dan kanan */
+    padding: 12px 20px;
     text-decoration: none;
-    color: #FFF4B7; /* Warna teks */
-    font-size: 16px; /* Sesuaikan ukuran font */
+    color: #FFF4B7;
+    font-size: 16px;
 }
 .profile-menu a:hover {
-    background-color: #FFF4B7; /* Warna saat di-hover */
+    background-color: #FFF4B7;
 }
 
 .label {
     color: #FFF4B7; 
-
 }
 
 .value {
@@ -62,34 +50,66 @@ p{
     font-weight: bold;
 }
 
+.main{
+    height: 100vh;
+    box-sizing: border-box;
+}
 
-    .main{
-      height: 100vh;
-      box-sizing: border-box;
-    }
-    .login-box{
-      width: 500px;
-      border: solid 1px;
-      padding: 35px;
-    }
-    .register-box{
-        width: 500px;
-        border: solid 1px;
-        padding: 20px;
-        margin-top: 200px;
-      }
-    form div {
-      margin-bottom: 15px;
-    }
-    h3 {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-    .btn-custom{
-      background-color: #B03052;
-      color: #FFF4B7; 
-    }
-    .btn-custom:hover{
-      background-color: #D76C82;
-      color: #B03052;
-    }
+.login-box{
+    width: 500px;
+    border: solid 1px;
+    padding: 35px;
+}
+
+.register-box{
+    width: 500px;
+    border: solid 1px;
+    padding: 20px;
+    margin: 100px auto;
+    max-width: 100%;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.btn-custom{
+    background-color: #B03052;
+    color: #FFF4B7;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.btn-custom:hover{
+    background-color: #D76C82;
+    color: #B03052;
+}
+
+.navbar-brand, .nav-item{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.nav-link{
+    color: #FFF4B7;
+}
+
+.nav-item a:hover{
+    color: #D76C82;
+}
+
+.btn-link{
+    color: #D76C82;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.btn-link:hover{
+    color: #B03052;
+}
+

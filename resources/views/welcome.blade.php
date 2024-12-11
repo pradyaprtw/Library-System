@@ -10,10 +10,10 @@
             <ul class="navbar-nav ms-auto"> 
                 @guest
                     <li class="nav-item">
-                        <a style="color: #FFF4B7" class="nav-link" href="{{ route('login') }}">Login</a>
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a style="color: #FFF4B7" class="nav-link" href="{{ route('register') }}">Sign Up</a>
+                        <a class="nav-link" href="{{ route('register') }}">Sign Up</a>
                     </li>
                 @else
                     <li class="nav-item">
@@ -34,12 +34,11 @@
                     <img src="{{ asset('storage/'.$item->foto) }}" class="card-img-top" alt="gambar buku">
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ $item->judul_buku }}</h5>
-                    <p class="card-title">{{ $item->penulis }}</p>
-                    <p class="card-title">{{ $item->penerbit }}</p>
-                    <p class="card-title">{{ $item->tahun_terbit }}</p>
-                    <p class="card-title">{{ $item->stok }}</p>
-                    
+                    <p class="card-title"><b>Judul:</b> {{ $item->judul_buku }}</p>
+                    <p class="card-title"><b>Penulis:</b> {{ $item->penulis }}</p>
+                    <p class="card-title"><b>Penerbit:</b> {{ $item->penerbit }}</p>
+                    <p class="card-title"><b>Tahun Terbit:</b> {{ $item->tahun_terbit }}</p>
+                    <p class="card-title"><b>Stok:</b>  {{ $item->stok }}</p>                    
                     <!-- Tombol Pinjam -->
                     @guest
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Pinjam</button>
@@ -64,7 +63,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="background-color: #B03052; color: #FFF4B7;">
-                    <p>Untuk meminjam buku, Anda perlu login terlebih dahulu.</p>
+                    <p>Untuk meminjam buku, Anda perlu login atau sign up terlebih dahulu.</p>
                     <a href="{{ route('login') }}" class="btn btn-primary w-100">Login</a>
                     <a href="{{ route('register') }}" class="btn btn-secondary w-100 mt-2">Sign Up</a>
                 </div>

@@ -79,7 +79,7 @@ class BukuSeeder extends Seeder
                 'stok' => '10',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'foto' => 'images/Buku 6.jpeg',
+                'foto' => 'images/Buku 7.jpeg',
             ],
             [
                 'judul_buku' => 'Pendidikan Kaum Tertindas (Pedagogy of the Oppressed)',
@@ -90,7 +90,7 @@ class BukuSeeder extends Seeder
                 'stok' => '10',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'foto' => 'images/Buku 7.jpeg',
+                'foto' => 'images/Buku 8.jpeg',
             ],
             [
                 'judul_buku' => 'The Three-Body Problem',
@@ -101,7 +101,7 @@ class BukuSeeder extends Seeder
                 'stok' => '10',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'foto' => 'images/Buku 8.jpeg',
+                'foto' => 'images/Buku 9.jpeg',
             ],
             [
                 'judul_buku' => 'Pergi',
@@ -112,7 +112,7 @@ class BukuSeeder extends Seeder
                 'stok' => '10',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'foto' => 'images/Buku 9.jpeg',
+                'foto' => 'images/Buku 10.jpeg',
             ],
             [
                 'judul_buku' => 'Steve Jobs',
@@ -123,7 +123,7 @@ class BukuSeeder extends Seeder
                 'stok' => '10',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-                'foto' => 'images/Buku 10.jpeg',
+                'foto' => 'images/Buku 6.jpeg',
             ],
             [
                 'judul_buku' => 'Real Face',

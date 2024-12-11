@@ -13,8 +13,7 @@
 @endpush
 
 @section('content')
-<div class="container">
-    <h3 class="mt-4 mb-4">Edit Profile</h3>
+<div class="container mt-4">
     <div class="row">
         @livewire('users-edit', ['id' => $id])
     </div>

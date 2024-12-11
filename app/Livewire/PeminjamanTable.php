@@ -13,12 +13,13 @@ class PeminjamanTable extends Component
         $peminjaman->delete();
         $this->dispatch('peminjamanDeleted');
 
+        session()->flash('success', 'Peminjaman berhasil dihapus.');
         return redirect()->route('peminjaman.index');
     }
     public function render()
     {
-        $peminjaman = PeminjamanModel::orderByRaw("FIELD(status, 'Menunggu Konfirmasi') DESC")
-        ->orderBy('created_at', 'desc')
+        $peminjaman = PeminjamanModel::orderByRaw("FIELD(status, 'Menunggu Konfirmasi', 'Dipinjam', 'Dikembalikan') ASC")
+        ->orderBy('tanggal_peminjaman', 'desc')
         ->get();
         return view('livewire.peminjaman-table', compact('peminjaman'));
     }
@@ -30,7 +31,7 @@ class PeminjamanTable extends Component
             $peminjaman->status = 'Dipinjam';
             $peminjaman->save();
 
-            session()->flash('message', 'Peminjaman disetujui!');
+            session()->flash('success', 'Peminjaman disetujui!');
         }else {
             session()->flash('error', 'Peminjaman tidak dapat disetujui.');
         }

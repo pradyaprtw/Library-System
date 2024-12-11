@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class UpdateDendaDefaultInPeminjamanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('peminjaman', function (Blueprint $table) {
-            $table->decimal('denda', 8, 2);
-            $table->date('tanggal_dikembalikan')->nullable();
+            $table->integer('denda')->default(null)->nullable()->change();
         });
     }
 
@@ -23,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('peminjaman', function (Blueprint $table) {
-            $table->dropColumn('denda');
-            $table->dropColumn('tanggal_dikembalikan')->nullable();
+            $table->integer('denda')->default(0)->nullable(false)->change();
         });
     }
-};
+}

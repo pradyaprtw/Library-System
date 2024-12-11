@@ -10,9 +10,9 @@ class DendaTable extends Component
 {
     public function render()
     {
-        $denda = PembayaranModel::whereHas('peminjaman', function ($query) {
-            $query->where('denda', '>', 0);
-        })->get();
+        $denda = PeminjamanModel::where('denda', '>', 0)
+        ->orderBy('updated_at', 'desc')
+        ->get();
         
         return view('livewire.denda-table', ['denda' => $denda]);
         
@@ -25,7 +25,7 @@ class DendaTable extends Component
             $pembayaran->pembayaran_status = 'Konfirmasi';
             $pembayaran->save();
 
-            session()->flash('message', 'pembayaran disetujui!');
+            session()->flash('success', 'pembayaran disetujui!');
         }else {
             session()->flash('error', 'pembayaran tidak dapat disetujui.');
         }
